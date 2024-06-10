@@ -6,9 +6,9 @@ spring:
     name: small_ecom_application
 
   datasource:
-    username: aslam
-    password: aslam_pass
-    url : jdbc:mysql://10.10.0.3:3306/app_db
+    username: ${mysql_user}
+    password: ${mysql_password}
+    url : jdbc:mysql://${mysql_ip}:3306/${db_name}
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
