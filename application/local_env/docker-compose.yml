@@ -21,6 +21,25 @@ services:
       # Opens port 3306 on the container
       - '3306'
       # Where our data will be persisted
+  mysql-workbench:
+    image: lscr.io/linuxserver/mysql-workbench:latest
+    container_name: mysql-workbench
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - /work_bench/config:/config
+    ports:
+      - 3000:3000
+      - 3001:3001
+    cap_add:
+      - IPC_LOCK
+    restart: unless-stopped
+    networks:
+      app_net:
+        ipv4_address: 10.10.0.4
+
 
 networks:
   app_net:
