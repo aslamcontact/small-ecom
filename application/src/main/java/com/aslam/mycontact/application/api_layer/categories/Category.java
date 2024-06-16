@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -14,10 +15,13 @@ public class Category {
      @Autowired
     private CategoryService categoryService;
 
-     @GetMapping("/test")
-     public String test()
+     @GetMapping("/category")
+     public ResponseEntity<Optional<List<CategoryRequest>>> allCategory()
      {
-         return "hello";
+         return new ResponseEntity<>(
+                 categoryService.allCategory(),
+                 HttpStatus.OK
+         );
      }
      @PostMapping("/category")
     public ResponseEntity<Optional<CategoryRequest>> createCategory(@RequestBody CategoryRequest request)

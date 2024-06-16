@@ -7,7 +7,9 @@ import com.aslam.mycontact.application.dao_layer.categories.CategoryRepo;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CategoryService {
@@ -70,6 +72,20 @@ public class CategoryService {
          categoryRepo.delete(result.get());
         return new CategoryRequest(result.get().getCategoryName(),
                 result.get().getCategoryDescription());
+    }
+
+    public Optional<List<CategoryRequest>> allCategory()
+    {
+       List<Category> categories=categoryRepo.findAll();
+       List<CategoryRequest> result;
+       if(categories.isEmpty()) return Optional.of(List.of());
+      result= categories.stream()
+                                  .map(category ->
+                                          new CategoryRequest(
+                                                  category.getCategoryName(),
+                                                  category.getCategoryDescription()))
+                                   .toList();
+      return Optional.of(result);
     }
 
 
