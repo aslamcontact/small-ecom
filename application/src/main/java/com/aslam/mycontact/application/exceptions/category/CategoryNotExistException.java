@@ -1,4 +1,4 @@
-package com.aslam.mycontact.application.exceptions.Category;
+package com.aslam.mycontact.application.exceptions.category;
 
 public class CategoryNotExistException extends RuntimeException{
     private final String CategoryName;

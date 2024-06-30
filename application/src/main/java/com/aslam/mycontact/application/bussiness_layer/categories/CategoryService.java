@@ -1,7 +1,7 @@
 package com.aslam.mycontact.application.bussiness_layer.categories;
 
-import com.aslam.mycontact.application.exceptions.Category.CategoryExistException;
-import com.aslam.mycontact.application.exceptions.Category.CategoryNotExistException;
+import com.aslam.mycontact.application.exceptions.category.CategoryExistException;
+import com.aslam.mycontact.application.exceptions.category.CategoryNotExistException;
 import com.aslam.mycontact.application.dao_layer.categories.Category;
 import com.aslam.mycontact.application.dao_layer.categories.CategoryRepo;
 import jakarta.validation.constraints.NotNull;
@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class CategoryService {
@@ -76,7 +75,7 @@ public class CategoryService {
 
     public Optional<List<CategoryRequest>> allCategory()
     {
-       List<Category> categories=categoryRepo.findAll();
+       List<Category> categories=categoryRepo.findAllMainCategory();
        List<CategoryRequest> result;
        if(categories.isEmpty()) return Optional.of(List.of());
       result= categories.stream()
@@ -87,6 +86,8 @@ public class CategoryService {
                                    .toList();
       return Optional.of(result);
     }
+
+
 
 
 

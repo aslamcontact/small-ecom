@@ -1,4 +1,4 @@
-package com.aslam.mycontact.application.exceptions.Category;
+package com.aslam.mycontact.application.exceptions.category;
 
 import org.springframework.http.HttpStatus;
 
