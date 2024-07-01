@@ -11,12 +11,11 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("categories")
-public class Category {
+public class CategoryApi {
      @Autowired
     private CategoryService categoryService;
 
-     @GetMapping("/category")
+     @GetMapping("/categories")
      public ResponseEntity<Optional<List<CategoryRequest>>> allCategory()
      {
          return new ResponseEntity<>(
@@ -24,7 +23,7 @@ public class Category {
                  HttpStatus.OK
          );
      }
-     @PostMapping("/category")
+     @PostMapping("/categories/category")
     public ResponseEntity<Optional<CategoryRequest>> createCategory(@RequestBody CategoryRequest request)
     {
        request=  categoryService.createCategory(request);
@@ -33,7 +32,7 @@ public class Category {
                                       HttpStatus.CREATED);
     }
 
-    @PutMapping("/category")
+    @PutMapping("/categories/category")
     public ResponseEntity<Optional<CategoryRequest>> updateCategory(@RequestBody CategoryRequest request)
     {
         request=  categoryService.updateCategory(request);
@@ -41,7 +40,7 @@ public class Category {
         return new ResponseEntity<>( Optional.of(request),
                 HttpStatus.CREATED);
     }
-    @GetMapping("/category/{name}")
+    @GetMapping("categories/category/{name}")
     public ResponseEntity<Optional<CategoryRequest>> readCategory(@PathVariable(value = "name") String categoryName)
     {
         CategoryRequest response;
@@ -52,7 +51,7 @@ public class Category {
     }
 
 
-    @DeleteMapping("/category/{name}")
+    @DeleteMapping("categories/category/{name}")
     public ResponseEntity<Optional<CategoryRequest>> removeCategory(
             @PathVariable(value = "name") String categoryName)
     {

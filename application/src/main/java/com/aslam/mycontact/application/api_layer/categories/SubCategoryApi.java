@@ -13,32 +13,45 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("categories")
-public class SubCategories {
+public class SubCategoryApi {
     @Autowired
     private SubCategoryService subCategoryService;
 
 
-    @PostMapping("/subcategory")
+    @PostMapping("/{parentCategory}")
     public ResponseEntity<Optional<SubCategoryRequest>> createSubCategory(
-            @RequestBody SubCategoryRequest request)
+            @RequestBody CategoryRequest request,
+            @PathVariable(value="parentCategory") String parentCategory)
     {
-        request=  subCategoryService.createSubCategory(request);
+        SubCategoryRequest response;
+        response=  subCategoryService.createSubCategory(
+                new SubCategoryRequest(
+                        parentCategory,
+                        request.categoryName(),
+                        request.descriptions()));
 
-        return new ResponseEntity<>( Optional.of(request),
+        return new ResponseEntity<>( Optional.of(response),
                 HttpStatus.CREATED);
     }
-    @PutMapping("/subcategory")
+    @PutMapping("/{parentCategory}")
     public ResponseEntity<Optional<SubCategoryRequest>> updateSubCategory(
-            @RequestBody SubCategoryRequest request)
+            @RequestBody CategoryRequest request,
+            @PathVariable(value="parentCategory") String parentCategory)
     {
-        request=  subCategoryService.updateSubCategory(request);
+        SubCategoryRequest response;
 
-        return new ResponseEntity<>( Optional.of(request),
+        response=  subCategoryService.updateSubCategory(
+                new SubCategoryRequest(
+                        parentCategory,
+                        request.categoryName(),
+                        request.descriptions()));
+
+        return new ResponseEntity<>( Optional.of(response),
                 HttpStatus.CREATED);
     }
 
 
-    @GetMapping("/subcategory/{parentCategory}/{subCategory}")
+    @GetMapping("/{parentCategory}/{subCategory}")
     public ResponseEntity<Optional<SubCategoryRequest>> readSubCategory(
             @PathVariable(value = "parentCategory") String parentCategory,
             @PathVariable(value="subCategory") String subCategory)
@@ -51,7 +64,7 @@ public class SubCategories {
         return new ResponseEntity<>( Optional.of(response),
                 HttpStatus.OK);
     }
-    @DeleteMapping("/subcategory/{parentCategory}/{subCategory}")
+    @DeleteMapping("/{parentCategory}/{subCategory}")
     public ResponseEntity<Optional<SubCategoryRequest>> removeSubCategory(
             @PathVariable(value = "parentCategory") String parentCategory,
             @PathVariable(value="subCategory") String subCategory)
@@ -65,7 +78,7 @@ public class SubCategories {
                 HttpStatus.OK);
     }
 
-    @GetMapping("/subcategory/{parentCategory}")
+    @GetMapping("/{parentCategory}")
     public ResponseEntity<Optional<List<SubCategoryRequest>>> allSubCategory(
             @PathVariable(value ="parentCategory") String parentCategory)
     {
